@@ -1,6 +1,7 @@
 package com.desafio.controller
 
 import com.desafio.models.User
+import com.desafio.models.UserDTO
 import com.desafio.repositories.UserRepository
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.get
@@ -13,17 +14,16 @@ class UserController(private val userRepository: UserRepository, private val app
     fun router()
     {
         app.routes(){
-            get("/users"){ctx ->
-                runBlocking {
-                    ctx.json(userRepository.findAll().await())
-                }
-            }
+//            get("/users"){ctx ->
+//                runBlocking {
+//                    ctx.json(userRepository.findAll().await())
+//                }
+//            }
 
             post("/users"){ ctx ->
-                val user = ctx.body<User>()
-                val userIdCreated = userRepository.save(user)
-                val userSeach = userRepository.selectById(userIdCreated)
-                ctx.json(userIdCreated).status(201)
+                val user = ctx.body<UserDTO>()
+                val userCreated = userRepository.save(user)
+                ctx.json(userCreated).status(201)
 
             }
         }

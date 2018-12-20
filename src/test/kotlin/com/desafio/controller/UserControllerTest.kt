@@ -18,7 +18,7 @@ class UserControllerTest: TestCase() {
     }
 
     fun `testar se o root da api responde 200`() {
-        val response = khttp.get(url = "$url/api/users")
+        val response = khttp.get(url = "$url/users")
         assertEquals(200, response.statusCode)
     }
 

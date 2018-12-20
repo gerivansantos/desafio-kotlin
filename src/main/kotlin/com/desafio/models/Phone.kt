@@ -1,9 +1,37 @@
 package com.desafio.models
 
-data class Phone(var id: String? = null,
-                var number: String,
-                var ddd: String)
+import org.jetbrains.exposed.dao.EntityID
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.IntIdTable
+import org.joda.time.DateTime
 
-var phones = hashMapOf(
-    "dc16aa15-61e4-41c7-b913-be5266d5e32c" to Phone("dc16aa15-61e4-41c7-b913-be5266d5e32c", "995784030", "81"),
-    "b8e54ab0-fbd8-4641-a648-3d0954fe9b0f" to Phone("b8e54ab0-fbd8-4641-a648-3d0954fe9b0f", "33610320", "81"))
+/*
+data class PhDTO(var usersId: Int? = null,
+                   var name: String,
+                   var email: String,
+                   var password: String,
+                   var created: DateTime? = null,
+                   var modified: DateTime? = null,
+                   var last_login: DateTime? = null,
+                   var token: String? = null)
+*/
+
+
+// Class
+class Phone(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<Phone>(Users)
+    var name by Users.name
+    var email by Users.email
+    var password by Users.password
+    var created by Users.created
+    var modified by Users. modified
+    var last_login by Users.last_login
+    var token by Users.token
+}
+
+// Mappeamento Banco
+object Phones: IntIdTable(){
+    var number = varchar("name", 255)
+    var ddd = varchar("email", 100)
+}

@@ -1,22 +1,14 @@
 package com.desafio.repositories
 
 import com.desafio.models.User
-import com.desafio.models.Users
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import org.jetbrains.exposed.dao.EntityID
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.statements.InsertStatement
+import com.desafio.models.UserDTO
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
 
 class UserRepository(){
 
-    fun findAll() = GlobalScope.async {
+    /*fun findAll() = GlobalScope.async {
         transaction {
             Users.selectAll().map {
                 User(
@@ -31,7 +23,7 @@ class UserRepository(){
                 )
             }
         }
-    }
+    }*/
 
     /*val movie = StarWarsFilm.new {
         name = "The Last Jedi"
@@ -39,32 +31,42 @@ class UserRepository(){
         director = "Rian Johnson"
     }*/
 
-    fun save(user: User): Int {
+    fun save(user: UserDTO): UserDTO {
 
-        val id = transaction {
-            Users.insertAndGetId {
-                it[Users.name] = user.name
-                it[Users.email] = user.email
-                it[Users.password] = user.password
-                it[Users.created] = DateTime()
-                it[Users.modified] = DateTime()
-                it[Users.last_login] = DateTime()
-                it[Users.token] = UUID.randomUUID().toString()
+        var userCreated = transaction {
+
+            var dateNow = DateTime()
+            var newToken = UUID.randomUUID().toString()
+
+            User.new {
+                name = user.name
+                email = user.email
+                password = user.password
+
+                created = dateNow
+                modified = dateNow
+                last_login = dateNow
+
+                token = newToken
+
             }
+
         }
+        return UserDTO(
+            usersId = userCreated.id.value,
+            name = userCreated.name,
+            email = userCreated.email,
+            password =  userCreated.password,
+            created = userCreated.created,
+            modified = userCreated.modified,
+            last_login = userCreated.last_login,
+            token = userCreated.token
 
-        return id.value
+        )
 
 
     }
 
-    fun selectById(id: Int){
-
-        val query: Query = Users.select{ Users.usersId eq id}
-
-        println(query)
-
-    }
 
 
 
