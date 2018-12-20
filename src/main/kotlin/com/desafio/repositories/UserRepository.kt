@@ -5,7 +5,9 @@ import com.desafio.models.Users
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.jetbrains.exposed.dao.EntityID
+import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -53,6 +55,14 @@ class UserRepository(){
 
         return id.value
 
+
+    }
+
+    fun selectById(id: Int){
+
+        val query: Query = Users.select{ Users.usersId eq id}
+
+        println(query)
 
     }
 
