@@ -39,8 +39,8 @@ class UserRepository(){
 
     fun save(user: User): Int {
 
-        transaction {
-            var insertAndGetId: EntityID<Int> = Users.insertAndGetId {
+        val id = transaction {
+            Users.insertAndGetId {
                 it[Users.name] = user.name
                 it[Users.email] = user.email
                 it[Users.password] = user.password
@@ -49,10 +49,10 @@ class UserRepository(){
                 it[Users.last_login] = DateTime()
                 it[Users.token] = UUID.randomUUID().toString()
             }
-            return@transaction insertAndGetId.value
         }
 
-        return 0
+        return id.value
+
 
     }
 
