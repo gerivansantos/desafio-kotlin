@@ -15,12 +15,12 @@ class UserController(private val userService: UserService, private val app: Java
     fun router()
     {
         app.routes(){
-            /*get("/users"){ctx ->
+            get("/users"){ctx ->
                 runBlocking {
                     var users = userService.findAll()
                     ctx.json(users).status(200)
                 }
-            }*/
+            }
 
             post("/users"){ ctx ->
                 val user = ctx.body<UserDTO>()

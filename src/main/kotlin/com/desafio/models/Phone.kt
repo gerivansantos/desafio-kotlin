@@ -17,21 +17,19 @@ data class PhDTO(var usersId: Int? = null,
                    var token: String? = null)
 */
 
-
-// Class
-class Phone(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Phone>(Users)
-    var name by Users.name
-    var email by Users.email
-    var password by Users.password
-    var created by Users.created
-    var modified by Users. modified
-    var last_login by Users.last_login
-    var token by Users.token
-}
-
 // Mappeamento Banco
 object Phones: IntIdTable(){
+    var user = reference("user", Users).nullable()
     var number = varchar("name", 255)
     var ddd = varchar("email", 100)
 }
+
+// Class
+class Phone(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<Phone>(Phones)
+
+    var user by User optionalReferencedOn  Phones.user
+    var number by Phones.number
+    var ddd by Phones.ddd
+}
+

@@ -1,6 +1,8 @@
 package com.desafio
 
 import com.desafio.Services.UserService
+import com.desafio.config.configureMapper
+import com.desafio.config.exception.ExceptionHandler
 import com.desafio.controller.UserController
 import com.desafio.models.User
 import com.desafio.repositories.UserRepository
@@ -22,11 +24,15 @@ class JavalinApp(private val port: Int) {
             user = "postgres",
             password = "postgres")
 
+        configureMapper()
+
 
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, ctx -> e.printStackTrace()}
             error(404){ctx -> ctx.json("not found")}
         }.start(port)
+
+        ExceptionHandler.register(app)
 
         app.get("/") { ctx -> ctx.json(mapOf("message" to "ola, mundo")) }
 
