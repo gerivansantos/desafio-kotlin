@@ -21,7 +21,7 @@ class UserRepository(){
                     last_login = user.last_login,
                     token = user.token ) }
             }
-}
+    }
 
     fun save(user: UserDTO): UserDTO {
 
@@ -31,9 +31,9 @@ class UserRepository(){
             var newToken = UUID.randomUUID().toString()
 
             User.new {
-                name = user.name
-                email = user.email
-                password = user.password
+                name = user.name.toString()
+                email = user.email.toString()
+                password = user.password.toString()
 
                 created = dateNow
                 modified = dateNow

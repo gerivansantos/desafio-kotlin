@@ -1,5 +1,6 @@
 package com.desafio.utils
 
+import io.javalin.json.JavalinJackson
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -10,5 +11,11 @@ fun String.md5(): String {
 
 
 fun fail(message: String): Nothing {
-    throw IllegalStateException(message)
+    val throwable = Throwable(message)
+    Thread.setDefaultUncaughtExceptionHandler{ t, e -> System.err.println(e.message)}
+    throw throwable
+}
+
+fun <T> String.toJsonObject(valueType: Class<T>): T {
+    return JavalinJackson.getObjectMapper().readValue(this, valueType)
 }
