@@ -1,5 +1,6 @@
 package com.desafio
 
+import com.desafio.Services.UserService
 import com.desafio.controller.UserController
 import com.desafio.models.User
 import com.desafio.repositories.UserRepository
@@ -16,7 +17,7 @@ class JavalinApp(private val port: Int) {
 
     fun init() : Javalin {
 
-        Database.connect("jdbc:postgresql://localhost:5432/desafio-concrete",
+        Database.connect("jdbc:postgresql://localhost:5432/desafio-concrete?searchpath=c6",
             driver = "org.postgresql.Driver",
             user = "postgres",
             password = "postgres")
@@ -29,8 +30,8 @@ class JavalinApp(private val port: Int) {
 
         app.get("/") { ctx -> ctx.json(mapOf("message" to "ola, mundo")) }
 
-        val userRepository = UserRepository()
-        val users = UserController(userRepository,app)
+        val userService = UserService()
+        val users = UserController(userService,app)
         users.router()
 
 

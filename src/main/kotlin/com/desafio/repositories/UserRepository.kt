@@ -2,34 +2,26 @@ package com.desafio.repositories
 
 import com.desafio.models.User
 import com.desafio.models.UserDTO
+import com.desafio.models.Users
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
 
 class UserRepository(){
 
-    /*fun findAll() = GlobalScope.async {
-        transaction {
-            Users.selectAll().map {
-                User(
-                    it[Users.usersId],
-                    it[Users.name],
-                    it[Users.email],
-                    it[Users.password],
-                    it[Users.created],
-                    it[Users.modified],
-                    it[Users.last_login],
-                    it[Users.token]
-                )
+    fun findAll(): List<UserDTO> {
+        return transaction {
+                User.all().map { user -> UserDTO(
+                    usersId = user.id.value,
+                    name = user.name,
+                    email = user.email,
+                    password =  user.password,
+                    created = user.created,
+                    modified = user.modified,
+                    last_login = user.last_login,
+                    token = user.token ) }
             }
-        }
-    }*/
-
-    /*val movie = StarWarsFilm.new {
-        name = "The Last Jedi"
-        sequelId = 8
-        director = "Rian Johnson"
-    }*/
+}
 
     fun save(user: UserDTO): UserDTO {
 
@@ -66,10 +58,6 @@ class UserRepository(){
 
 
     }
-
-
-
-
 
 
 }
