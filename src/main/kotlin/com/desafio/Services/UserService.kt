@@ -24,8 +24,6 @@ class UserService(){
             user.password = user.password.md5()
             return userRepository.save(user)
         }
-
-
     }
 
 
