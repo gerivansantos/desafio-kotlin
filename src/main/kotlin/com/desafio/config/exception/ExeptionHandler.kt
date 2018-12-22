@@ -6,23 +6,27 @@ import io.javalin.HttpResponseException
 import io.javalin.Javalin
 import org.eclipse.jetty.http.HttpStatus
 
-class ErrorResponse : HashMap<String, Any>()
+class ErrorResponse : HashMap<String,  Any>()
 
 object ExceptionHandler {
     fun register(app: Javalin){
         app.exception(Exception::class.java){exception, ctx ->
             exception.printStackTrace()
             val error = ErrorResponse()
-            error["Error"] = listOf(exception.message)
+            error["messagem"] = listOf(exception.message)
             ctx.json(error).status(HttpStatus.INTERNAL_SERVER_ERROR_500)
         }
-        app.exception(HttpResponseException::class.java){exception, ctx ->
+       /* app.exception(HttpResponseException::class.java){exception, ctx ->
             val error = BadRequestErrorResponse(exception.message.toString())
             ctx.json(error).status(exception.status)
         }
         app.exception(BadRequestResponse::class.java){exception, ctx ->
             val error = BadRequestResponse(exception.message.toString())
             ctx.json(error).status(exception.status)
+        }*/
+
+        app.exception(ValidationException::class.java) { exception, ctx ->
+            ctx.json(exception.error).status(exception.statusCode)
         }
     }
 }

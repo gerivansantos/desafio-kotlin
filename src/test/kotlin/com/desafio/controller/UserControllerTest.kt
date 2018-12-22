@@ -1,7 +1,7 @@
 package com.desafio.controller
 
 import com.desafio.JavalinApp
-import com.desafio.models.UserDTO
+import com.desafio.dto.UserDTO
 import com.desafio.utils.toJsonObject
 import io.javalin.Javalin
 import io.javalin.json.JavalinJackson

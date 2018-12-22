@@ -1,8 +1,10 @@
 package com.desafio.repositories
 
+import com.desafio.dto.UserDTO
 import com.desafio.models.User
-import com.desafio.models.UserDTO
 import com.desafio.models.Users
+import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
@@ -19,13 +21,14 @@ class UserRepository(){
                     created = user.created,
                     modified = user.modified,
                     last_login = user.last_login,
-                    token = user.token ) }
+                    token = user.token
+                    ) }
             }
     }
 
-    fun save(user: UserDTO): UserDTO {
+    fun save(user: UserDTO): User {
 
-        var userCreated = transaction {
+        return transaction {
 
             var dateNow = DateTime()
             var newToken = UUID.randomUUID().toString()
@@ -44,7 +47,7 @@ class UserRepository(){
             }
 
         }
-        return UserDTO(
+        /*return UserDTO(
             usersId = userCreated.id.value,
             name = userCreated.name,
             email = userCreated.email,
@@ -54,9 +57,33 @@ class UserRepository(){
             last_login = userCreated.last_login,
             token = userCreated.token
 
-        )
+        )*/
 
 
+    }
+
+    fun findByEmail(email: String?): User? {
+        return transaction {
+            User.find{ Users.email eq email.toString() }.firstOrNull()
+        }
+
+    }
+
+    fun findByToken(token: String?): User? {
+        return transaction {
+            User.find{ Users.token eq token.toString() }.firstOrNull()
+        }
+
+    }
+
+    fun findById(userId: Int?): User? {
+        return transaction{
+            User.find{ Users.id eq userId }.firstOrNull()
+        }
+    }
+
+    fun updateLastLogin(){
+       
     }
 
 

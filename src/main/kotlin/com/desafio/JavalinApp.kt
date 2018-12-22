@@ -1,8 +1,10 @@
 package com.desafio
 
+import com.desafio.Services.LoginService
 import com.desafio.Services.UserService
 import com.desafio.config.configureMapper
 import com.desafio.config.exception.ExceptionHandler
+import com.desafio.controller.LoginController
 import com.desafio.controller.UserController
 import com.desafio.models.User
 import com.desafio.repositories.UserRepository
@@ -36,9 +38,11 @@ class JavalinApp(private val port: Int) {
 
         app.get("/") { ctx -> ctx.json(mapOf("message" to "ola, mundo")) }
 
-        val userService = UserService()
-        val users = UserController(userService,app)
-        users.router()
+        //val userService = UserService()
+        //val loginService = LoginService()
+
+        UserController(UserService(),app).router()
+        LoginController(LoginService(),app).router()
 
 
         /*app.routes{
