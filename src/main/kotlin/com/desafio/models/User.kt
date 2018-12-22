@@ -3,15 +3,6 @@ package com.desafio.models
 import org.jetbrains.exposed.dao.*
 import org.joda.time.DateTime
 
-data class UserDTO( var usersId: Int? = null,
-                    var name: String? = null,
-                    var email: String? = null,
-                    var password: String? = null,
-                    var created: DateTime? = null,
-                    var modified: DateTime? = null,
-                    var last_login: DateTime? = null,
-                    var token: String? = null)
-
 // Mappeamento Banco
 object Users: IntIdTable(){
     var name = varchar("name", 255)
@@ -33,6 +24,7 @@ class User(id: EntityID<Int>) : IntEntity(id) {
     var modified by Users. modified
     var last_login by Users.last_login
     var token by Users.token
+    val phones by Phone referrersOn Phones.user
 }
 
 
