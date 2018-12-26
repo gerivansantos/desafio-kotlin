@@ -28,7 +28,6 @@ class JavalinApp(private val port: Int) {
 
         configureMapper()
 
-
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, ctx -> e.printStackTrace()}
             error(404){ctx -> ctx.json("not found")}
@@ -38,22 +37,9 @@ class JavalinApp(private val port: Int) {
 
         app.get("/") { ctx -> ctx.json(mapOf("message" to "ola, mundo")) }
 
-        //val userService = UserService()
-        //val loginService = LoginService()
-
         UserController(UserService(),app).router()
         LoginController(LoginService(),app).router()
 
-
-        /*app.routes{
-            path("api") {
-                path("users") {
-                   // get(UserController::getAllUserIds)
-                    //post(UserController::createUser)
-                }
-            }
-
-        }*/
 
         return app
     }

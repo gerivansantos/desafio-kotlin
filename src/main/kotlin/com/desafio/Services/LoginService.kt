@@ -5,6 +5,8 @@ import com.desafio.dto.LoginDTO
 import com.desafio.dto.UserDTO
 import com.desafio.repositories.UserRepository
 import org.eclipse.jetty.http.HttpStatus
+import org.joda.time.DateTime
+import java.util.*
 
 class LoginService(){
 
@@ -28,7 +30,9 @@ class LoginService(){
             {
                 if(userByEmail.password == login.password)
                 {
-                    userRepository.
+                    userRepository.updateLastLoginAndToken(userByEmail)
+                    userByEmail = userRepository.findByEmail(login.email)
+
                     return userService.userToUserDTO(userByEmail)
                 }
                 else

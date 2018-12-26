@@ -10,7 +10,6 @@ class LoginController(private val loginService: LoginService,private val app: Ja
     fun router()
     {
         app.routes(){
-
             post("/login") { ctx ->
                 val login = ctx.body<LoginDTO>()
                 login.password = login.password.toString().md5()
