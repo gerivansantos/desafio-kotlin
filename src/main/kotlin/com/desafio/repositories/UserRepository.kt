@@ -6,6 +6,7 @@ import com.desafio.models.Users
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import org.joda.time.DateTime
 import java.util.*
 
@@ -47,19 +48,6 @@ class UserRepository(){
             }
 
         }
-        /*return UserDTO(
-            usersId = userCreated.id.value,
-            name = userCreated.name,
-            email = userCreated.email,
-            password =  userCreated.password,
-            created = userCreated.created,
-            modified = userCreated.modified,
-            last_login = userCreated.last_login,
-            token = userCreated.token
-
-        )*/
-
-
     }
 
     fun findByEmail(email: String?): User? {
@@ -82,9 +70,15 @@ class UserRepository(){
         }
     }
 
-    fun updateLastLogin(){
-       
+    fun updateLastLoginAndToken(user: User){
+        return transaction{
+            Users.update ({ Users.id eq user.id}){
+                it[last_login] = DateTime()
+                it[token] = UUID.randomUUID().toString()
+            }
+        }
     }
+
 
 
 }

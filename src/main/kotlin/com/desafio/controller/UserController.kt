@@ -23,7 +23,7 @@ class UserController(private val userService: UserService/*, private val phoneSe
             get("/users/:user-id"){ ctx ->
                 runBlocking {
                     var userId = ctx.pathParam("user-id").toInt()
-                    var tokenAuthorization = ctx.header("Authorization")?.replace("Bearer  ","")
+                    var tokenAuthorization = ctx.header("Authorization")?.replace("Bearer ","")
 
 
                     var userFound: UserDTO = userService.getUser(userId, tokenAuthorization)

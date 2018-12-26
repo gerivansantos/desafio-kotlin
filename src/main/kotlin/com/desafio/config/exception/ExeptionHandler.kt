@@ -16,15 +16,6 @@ object ExceptionHandler {
             error["messagem"] = listOf(exception.message)
             ctx.json(error).status(HttpStatus.INTERNAL_SERVER_ERROR_500)
         }
-       /* app.exception(HttpResponseException::class.java){exception, ctx ->
-            val error = BadRequestErrorResponse(exception.message.toString())
-            ctx.json(error).status(exception.status)
-        }
-        app.exception(BadRequestResponse::class.java){exception, ctx ->
-            val error = BadRequestResponse(exception.message.toString())
-            ctx.json(error).status(exception.status)
-        }*/
-
         app.exception(ValidationException::class.java) { exception, ctx ->
             ctx.json(exception.error).status(exception.statusCode)
         }
