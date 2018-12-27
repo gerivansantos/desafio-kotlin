@@ -16,10 +16,9 @@ import org.joda.time.Minutes
 class UserService(private val userRepository: UserRepository,
                   private val phoneService: PhoneService){
 
-    fun logar(user: UserDTO){
+    /*fun logar(user: UserDTO){
         var userFound: User? = userRepository.findById(user.usersId)
-
-    }
+    }*/
 
     fun save(user: UserDTO): UserDTO{
 
@@ -46,7 +45,8 @@ class UserService(private val userRepository: UserRepository,
 
 
                 user.phones.let {
-                    val storedPhones: List<Phone> = phoneService.save(it!!, userCreated)
+                    //val storedPhones: List<Phone> =
+                    phoneService.save(it!!, userCreated)
                 }
                 return userToUserDTO(userCreated)
             }

@@ -1,10 +1,13 @@
 plugins {
+    id 'application'
     id 'org.jetbrains.kotlin.jvm' version '1.3.10'
     id "org.flywaydb.flyway" version "5.2.3"
 }
 
 group 'com.desafio'
 version '1.0-SNAPSHOT'
+
+
 
 repositories {
     mavenCentral()
@@ -39,6 +42,10 @@ flyway {
     password = 'postgres'
 }
 
+
+mainClassName = "com.desafio.JavalinApp"
+
+task startApplication(dependsOn: ['flywayMigrate', 'run']){}
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
