@@ -1,6 +1,6 @@
 package com.desafio.controller
 
-import com.desafio.JavalinApp
+import com.desafio.config.AppConfig
 import com.desafio.dto.UserDTO
 import com.desafio.utils.toJsonObject
 import io.javalin.Javalin
@@ -13,7 +13,7 @@ class UserControllerTest: TestCase() {
     private val url = "http://localhost:7000"
 
     override fun setUp() {
-        app = JavalinApp(port = 7000).init()
+        app = AppConfig(7001).setup().start()
     }
 
     override fun tearDown(){

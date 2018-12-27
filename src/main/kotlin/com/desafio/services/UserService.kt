@@ -1,4 +1,4 @@
-package com.desafio.Services
+package com.desafio.services
 
 import com.desafio.config.exception.ValidationException
 import com.desafio.dto.PhoneDTO
@@ -13,10 +13,8 @@ import java.util.*
 import org.joda.time.Minutes
 
 
-class UserService(){
-
-    var userRepository: UserRepository = UserRepository()
-    var phoneService: PhoneService = PhoneService()
+class UserService(private val userRepository: UserRepository,
+                  private val phoneService: PhoneService){
 
     fun logar(user: UserDTO){
         var userFound: User? = userRepository.findById(user.usersId)
@@ -49,7 +47,6 @@ class UserService(){
 
                 user.phones.let {
                     val storedPhones: List<Phone> = phoneService.save(it!!, userCreated)
-                    //userCreated.phones  listPhoneToListPhoneDTO(storedPhones)
                 }
                 return userToUserDTO(userCreated)
             }
@@ -126,7 +123,6 @@ class UserService(){
         }
 
     }
-
 
     fun userToUserDTO(user: User?): UserDTO {
         return UserDTO(
