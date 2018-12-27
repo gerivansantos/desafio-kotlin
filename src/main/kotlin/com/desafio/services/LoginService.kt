@@ -1,17 +1,15 @@
-package com.desafio.Services
+package com.desafio.services
 
 import com.desafio.config.exception.ValidationException
 import com.desafio.dto.LoginDTO
 import com.desafio.dto.UserDTO
 import com.desafio.repositories.UserRepository
 import org.eclipse.jetty.http.HttpStatus
-import org.joda.time.DateTime
-import java.util.*
 
-class LoginService(){
+class LoginService(private val userRepository: UserRepository,
+                   private val userService: UserService){
 
-    val userRepository: UserRepository = UserRepository()
-    val userService: UserService = UserService()
+
 
     fun login(login: LoginDTO): UserDTO {
 

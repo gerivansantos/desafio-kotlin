@@ -1,51 +1,18 @@
 package com.desafio
 
-import com.desafio.Services.LoginService
-import com.desafio.Services.UserService
+import com.desafio.config.AppConfig
+import com.desafio.config.ModuleConfig
+import com.desafio.config.Routes
 import com.desafio.config.configureMapper
 import com.desafio.config.exception.ExceptionHandler
-import com.desafio.controller.LoginController
-import com.desafio.controller.UserController
-import com.desafio.models.User
-import com.desafio.repositories.UserRepository
+import com.desafio.constants.ApplicationConstants.DEFAUL_SERVER_PORT
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.*
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.StandAloneContext
+import org.koin.standalone.inject
 import java.lang.Exception
 
-class JavalinApp(private val port: Int) {
-
-    //val controller = UserController(users)
-
-    fun init() : Javalin {
-
-        Database.connect("jdbc:postgresql://localhost:5432/desafio-concrete?searchpath=c6",
-            driver = "org.postgresql.Driver",
-            user = "postgres",
-            password = "postgres")
-
-        configureMapper()
-
-        val app = Javalin.create().apply {
-            exception(Exception::class.java) { e, ctx -> e.printStackTrace()}
-            error(404){ctx -> ctx.json("not found")}
-        }.start(port)
-
-        ExceptionHandler.register(app)
-
-        app.get("/") { ctx -> ctx.json(mapOf("message" to "ola, mundo")) }
-
-        UserController(UserService(),app).router()
-        LoginController(LoginService(),app).router()
-
-
-        return app
-    }
-
-}
-
 fun main(args: Array<String>){
-    JavalinApp(7000).init()
+    AppConfig(DEFAUL_SERVER_PORT).setup().start()
 }
