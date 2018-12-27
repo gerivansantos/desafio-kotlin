@@ -13,7 +13,7 @@ class UserControllerTest: TestCase() {
     private val url = "http://localhost:7000"
 
     override fun setUp() {
-        app = AppConfig(7001).setup().start()
+        app = AppConfig(7001).setup()
     }
 
     override fun tearDown(){
@@ -68,8 +68,6 @@ class UserControllerTest: TestCase() {
     }
 
     fun `testar se o findAll retorna o status 200`() {
-        //val user = UserDTO(name = "User Teste", email = "userteste@gmail.com")
-        //val body = JavalinJackson.getObjectMapper().writeValueAsString(user)
         val response = khttp.get(url = "$url/users")
         assertEquals(200, response.statusCode)
     }
