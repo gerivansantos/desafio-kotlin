@@ -7,11 +7,12 @@ src/main/com.desafio/constants/ApplicationConstants
 
 Configurar os parâmetros abaixo:
 
-const val DEFAUL_SERVER_PORT: Int = <b>porta_do_servidor</b>
-const val URL_DATABASE: String = "jdbc:postgresql://localhost:5432/<b>nome_do_banco</b>"
-const val USER_DATABASE: String = "<b>usuario_do_banco</b>"
-const val PASSWORD_DATABASE: String = "<b>senha_do_banco</b>"
-
+```
+const val DEFAUL_SERVER_PORT: Int = porta_do_servidor
+const val URL_DATABASE: String = "jdbc:postgresql://localhost:5432/nome_do_banco"
+const val USER_DATABASE: String = "usuario_do_banco"
+const val PASSWORD_DATABASE: String = "senha_do_banco"
+```
 
 # REST API
 
