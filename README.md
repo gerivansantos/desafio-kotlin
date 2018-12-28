@@ -3,6 +3,10 @@ Desafio Kotlin
 
 -PostgresSQL
 
+# Run
+gradle startApplication
+
+
 src/main/com.desafio/constants/ApplicationConstants
 
 Configurar os parâmetros abaixo:
